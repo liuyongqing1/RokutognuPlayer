@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--********** Copyright 2016 Roku Corp.  All Rights Reserved. **********-->
+
+<component name="MainScene" extends="Scene" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://rokudev.roku.com/rokudev/schema/RokuSceneGraph.xsd">
+<script type="text/brightscript" uri="pkg:/components/MainScene/MainScene.brs"/>
+<children>
+    <LabelList
+    	id="list"
+    	translation = "[150, 150]"
+    	>
+        <!-- <Font role = "font" uri = "pkg:/fonts/cn.ttf" size="30" /> -->
+        <!-- <focusedFont>
+        <Font role = "font" uri = "pkg:/fonts/cn.ttf" size="30" />
+        </focusedFont> -->
+    	</LabelList>
+    <Video
+    id="Video"
+    translation = "[800, 100]"
+    width = "1056"
+    height= "649"
+    >
+    <!-- <Font role = "font" uri = "pkg:/fonts/cn.ttf" size="30" /> -->
+    </Video>
+    
+    <get_channel_list
+    	id="get_channel_list"
+    	control="STOP">
+        </get_channel_list>
+    	
+    <save_feed_url
+    	id="save_feed_url"
+    	control="STOP"/>
+    	
+</children>
+</component>
