@@ -62,16 +62,6 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
             m.video.height = 0
             
             result = true
-        ' else if key = "fastforward"
-        '     m.trickPlaySpeed++
-        '     if m.trickPlaySpeed > 3
-        '         m.trickPlaySpeed = 1
-        '     end if
-        ' else if key = "rewind"
-        '     m.trickPlaySpeed--
-        '     if m.trickPlaySpeed < -3
-        '             m.trickPlaySpeed = -1
-        '     end if
         else if(key = "left")
             m.list.SetFocus(true)
             m.video.translation = [800, 100]
@@ -79,6 +69,22 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
             m.video.height = 649
             result = true
         else if(key = "back")
+            if m.video.width = 1056
+                end
+            end if
+            if m.video.state="playing"
+                m.list.SetFocus(true)
+                m.video.translation = [800, 100]
+                m.video.width = 1056
+                m.video.height = 649
+                result = true
+            else if m.video.state="paused"
+                m.list.SetFocus(true)
+                m.video.translation = [800, 100]
+                m.video.width = 1056
+                m.video.height = 649
+                result = true
+            end if
             ' if m.backPressed = 0
             ' m.list.SetFocus(true)
             ' m.video.translation = [800, 100]
@@ -90,10 +96,6 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         else if key="down"
             m.video.trickplaybar.visible=FALSE
         else if key="play"
-            print ;" (";m.video.state;")" 
-
-            ' If m.video.trickplaybar.visible=FALSE
-            '     m.video.trickplaybar.visible=TRUE
             if m.video.state="playing"
                 m.video.control="pause"
                 m.video.trickplaybar.visible=TRUE
@@ -147,19 +149,6 @@ sub setChannel()
 		end for
 		content = m.list.content.getChild(m.list.currFocusSection).getChild(itemSelected)
 	end if
-    print " (";m.video;")"
-
-    ' font  = CreateObject("roSGNode", "Font")
-    ' font.uri = "pkg:/fonts/cn.ttf"
-    ' font.size=33
-    ' m.scr = m.video.FindNode("ProgressBar")
-    print " (";m.video.content;")"
-
-    ' m.scr.font=font
-    ' m.list.focusedFont = font
-    ' m.list.focusedFont.size = font.size+5
-
-
 	'Probably would be good to make content = content.clone(true) but for now it works like this
 	content.streamFormat = "hls, mp4, mkv, mp3, avi, m4v, ts, mpeg-4, flv, vob, ogg, ogv, webm, mov, wmv, asf, amv, mpg, mp2, mpeg, mpe, mpv, mpeg2"
 	if m.video.content <> invalid and m.video.content.url = content.url return
@@ -215,3 +204,8 @@ sub onKeyPress()
         '    m.top.unobserveField("buttonSelected")
     end if
 end sub
+
+
+Sub ExitUserInterface()
+    End
+End Sub
