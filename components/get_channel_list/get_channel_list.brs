@@ -39,13 +39,13 @@ sub getContent()
 
 	REM #EXTINF:-1 tvg-logo="" group-title="uk",BBC ONE HD
 	for each line in reLineSplit.Split (text)
+		' print line,inExtinf
 		if inExtinf
 			maPath = rePath.Match (line)
 			if maPath.Count () = 2
 				item = group.CreateChild("ContentNode")
 				item.url = maPath [1]
 				item.title = title
-
 				inExtinf = False
 			end if
 		end if
@@ -59,6 +59,7 @@ sub getContent()
 					node = con.getChild(x)
 					if node.id = groupName
 						group = node
+						' print node.ContentNode,group
 						exit for
 					end if
 				end for

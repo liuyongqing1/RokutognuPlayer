@@ -1,12 +1,6 @@
 sub init()
-
-
-    
-
     m.top.backgroundURI = "pkg:/images/background-controls.jpg"
-
     m.save_feed_url = m.top.FindNode("save_feed_url")  'Save url to registry
-
     m.get_channel_list = m.top.FindNode("get_channel_list") 'get url from registry and parse the feed
     m.get_channel_list.ObserveField("content", "SetContent") 'Is thre content parsed? If so, goto SetContent sub and dsipay list
 
@@ -17,6 +11,8 @@ sub init()
     m.list.font=font
     m.list.focusedFont = font
     m.list.focusedFont.size = font.size+5
+    m.list.sectionDividerFont = font
+    m.list.sectionDividerFont.size = font.size-6
 
 
     ' m.list.focusedFont = font
@@ -26,8 +22,9 @@ sub init()
 
 
     m.video = m.top.FindNode("Video")
-    m.video.font=font
-
+    m.video.setFocus(true)
+    ' m.video.font=font
+    ' m.video.control = "play"
     ' m.video.focusedFont.size = font.size+5
 
     ' m.video = m.top.FindNode("Video")
@@ -41,12 +38,12 @@ sub init()
 End sub
 
 
-function CreateFont(fontUrl as String) as Object
-    fontRegistry = CreateObject("roFontRegistry")
-    fontRegistry.AddFont(fontUrl)
-    font = fontRegistry.GetFontByIndex(0) ' 获取添加的字体
-    return font
-end function
+' function CreateFont(fontUrl as String) as Object
+'     fontRegistry = CreateObject("roFontRegistry")
+'     fontRegistry.AddFont(fontUrl)
+'     font = fontRegistry.GetFontByIndex(0) ' 获取添加的字体
+'     return font
+' end function
 
 ' **************************************************************
 
@@ -54,10 +51,9 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
     result = false
     print ">>> 详细信息 >> OnkeyEvent" 
     print key;" (";press;")" 
+    print ;" (";m.video.position;")" 
     if(press)'
         m.backPressed = 0
-    
-    
         if(key = "right")
             m.list.SetFocus(false)
             m.top.SetFocus(true)
@@ -84,27 +80,42 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
             result = true
         else if(key = "back")
             ' if m.backPressed = 0
-            m.list.SetFocus(true)
-            m.video.translation = [800, 100]
-            m.video.width = 1056
-            m.video.height = 649
-            result = true
-            ' else
-                ' screen = CreateObject("roSGScreen")
-                ' screen.Close()
-            ' end if
-            ' numberOfScreens = m.screenStack.Count()
-            ' close top screen if there are two or more screens in the screen stack
-            ' if numberOfScreens > 1
-            '     screen = CreateObject("roSGScreen")
-            '     screen.Close()
-            '     result = true
-            ' end if
+            ' m.list.SetFocus(true)
+            ' m.video.translation = [800, 100]
+            ' m.video.width = 1056
+            ' m.video.height = 649
+            ' result = true
+        else if key="up"
+            m.video.trickplaybar.visible=TRUE
+        else if key="down"
+            m.video.trickplaybar.visible=FALSE
+        else if key="play"
+            print ;" (";m.video.state;")" 
 
-
+            ' If m.video.trickplaybar.visible=FALSE
+            '     m.video.trickplaybar.visible=TRUE
+            if m.video.state="playing"
+                m.video.control="pause"
+                m.video.trickplaybar.visible=TRUE
+            else
+                m.video.control="resume"
+                m.video.trickplaybar.visible=FALSE
+            end if
         else if(key = "options")
             showdialog()
             result = true
+        else if key = "fastforward"
+            if (m.video.duration - m.video.position) > 60
+                m.video.seek = m.video.position + 60
+            end if
+        else if key = "rewind"
+            m.video.position = m.video.position - 30
+            if m.video.position < 0 then m.video.position = 0
+            m.video.seek = m.video.position
+        else if key = "replay"
+            m.video.position = m.video.position - 10
+            if m.video.position < 0 then m.video.position = 0
+            m.video.seek = m.video.position
         end if
     end if
     
