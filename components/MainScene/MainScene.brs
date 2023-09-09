@@ -183,7 +183,7 @@ sub showdialog()
     PRINT ">>>  ENTERING KEYBOARD <<<"
 
 
-    keyboarddialog = createObject("roSGNode", "KeyboardDialog")
+    keyboarddialog = createObject("roSGNode", "StandardKeyboardDialog")
     keyboarddialog.backgroundUri = "pkg:/images/rsgde_bg_hd.jpg"
     keyboarddialog.title = "ENTER PLAYLIST HERE"
 
@@ -192,8 +192,8 @@ sub showdialog()
 
     m.top.dialog = keyboarddialog
     m.top.dialog.text = m.global.feedurl
-    m.top.dialog.keyboard.textEditBox.cursorPosition = len(m.global.feedurl)
-    m.top.dialog.keyboard.textEditBox.maxTextLength = 300
+    ' m.top.dialog.keyboard.textEditBox.cursorPosition = len(m.global.feedurl)
+    ' m.top.dialog.keyboard.textEditBox.maxTextLength = 300
 
     KeyboardDialog.observeFieldScoped("buttonSelected","onKeyPress")  'we observe button ok/cancel, if so goto to onKeyPress sub
 end sub
